@@ -70,8 +70,18 @@ Findings:
 - Fixed up/middle/down zones were too rigid: no way to delete a zone, no angles past 0 in the up/down zones.
 - Saving a corrected value did not refresh YACL's displayed value; the screen was too wide on big monitors.
 
+## Roadmap
+
+1. **0.1 (now):** everything above, once the user has played it and is happy.
+2. **Next version:** shoulder view (left/right) as another view choice in the ranges; elytra (below).
+3. **Later, each grilled on its own first:**
+   - **Minecart camera follows the track.** Risk: quick successive turns cause motion sickness. Simple start: follow the travel direction heavily smoothed (1-2 s) so short wiggles barely move it. Complex: average the track direction a few blocks ahead. Open: turn only the camera, or also the player's look direction (that one fights the mouse).
+   - **Fishing camera:** follow the bobber in flight, then pan to a view looking back at the player ("second person") or a bird's-eye view, with an obstruction check; a fun line showing how far it landed. Not tied to mounts.
+   - **Boat camera:** over-the-shoulder or second-person view for boats, likely covered by the shoulder view.
+
 ## Open
 
 - Radar editing by dragging arc ends, if read-only feels limiting.
-
+- A quick mouse flick past a range edge briefly flashes the other view.
+- On small windows with 8 ranges the bottom buttons can be cut off (no scrolling yet).
 - **Elytra**: should gliding trigger it like a mount? Decide after the mount version works. [Auto Third Person](https://modrinth.com/mod/auto-third-person-official) already does mounts + elytra, so elytra is expected by users.
