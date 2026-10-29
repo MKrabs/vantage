@@ -37,14 +37,20 @@ So selfie switches in above 60 and releases below 20 through the overlap, and lo
 ## Tight spaces
 
 - Camera snaps in instantly when blocked, eases back out over the configured time. Leaves block as in vanilla.
+- **Too close: first person** (optional, off by default): while riding in third person or selfie, if the camera is pushed closer than 1.5 blocks, force first person. Back to the wanted view once there is more than 3 blocks of room and at least 2 s have passed. All three values are settings.
+  - In first person vanilla never measures, so `CameraMixin` calls `getMaxZoom` itself at the end of `alignWithEntity`.
+  - Known limit: in first person it measures behind the head, also when the wanted view is selfie (which looks from the front). The minimum time covers any bouncing.
+  - Manual F5 while forced is overridden until the force ends.
 
 ## Settings (own screen, Mod Menu optional)
 
 - Fixed, readable width; values update instantly; no collapsible groups. YACL dropped.
 - Mod on/off (no keybind).
-- Radar (display only for now): head on the left, half circle +90..-90, one arc per range in its view's colour, one ring per layer (layer 1 innermost), a beam for the current angle.
+- Radar (display only for now): head on the left, half circle +90..-90, one arc per range in its view's colour, one ring per layer (layer 1 innermost), a beam with the current angle as a label. Up to 325 px tall, shrinks on small screens.
 - One row per range with add and delete.
 - Ease-out time 0-2 s, default 0.5 s, 0 = off. Snaps to 0.2 / 0.5 / 0.667 / 1 when close; hold Shift for any value (hint shown under the slider).
+- Too-close camera: on/off plus the three values.
+- Bottom: **Cancel** (revert everything since the screen opened), **Reset to defaults** (second click confirms), **Done** (saves; Esc too). No step-by-step undo: Cancel covers it, revisit if missed.
 
 ## Out of scope
 
