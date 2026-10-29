@@ -3,10 +3,15 @@
 	"id": "vantage",
 	"version": "${version}",
 	"name": "Vantage - Auto Camera for Mounts",
-	"description": "Automatic third person when riding. Look down for first person, look up for a selfie.",
+	"description": "Switches the camera view while you ride, based on where you look: first person straight ahead, third person looking down, selfie looking up. Angles, views and layers are all adjustable.",
 	"authors": [
 		"M.krabs"
 	],
+	"contact": {
+		"homepage": "https://github.com/MKrabs/vantage",
+		"sources": "https://github.com/MKrabs/vantage",
+		"issues": "https://github.com/MKrabs/vantage/issues"
+	},
 	"license": "MIT",
 	"icon": "assets/vantage/icon.png",
 	"environment": "client",
