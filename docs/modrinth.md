@@ -17,4 +17,4 @@ Copy these into the Modrinth project. Keep them in sync with the README when fea
 - **Version number:** 1.0.0, release channel: Release
 - **Loader:** Fabric. **Game version:** 26.3
 - **Dependencies:** Fabric API (required), Mod Menu (optional)
-- **Changelog:** First release.
+- **Changelog:** the Highlights bullets of this version in [CHANGELOG.md](../CHANGELOG.md). A GitHub Release gets the whole version section.
