@@ -1,49 +1,47 @@
 # Vantage
 
-Vantage improves camera control so you don't have to keep pressing F5. Right now it handles perspective changes while riding an animal, boat or minecart. For example: look straight ahead for first person, look down for third person, look up for a selfie. Get off and your old view comes back. Quality of life: the camera glides back out smoothly after a wall pushes it close, and can switch to first person when there is no room behind you. More is planned, starting with an over-the-shoulder view.
+**Client side · Visual only · Does not affect gameplay**
 
-It works on anything you can sit on: horses, donkeys, camels, pigs, striders, boats, minecarts, modded mounts and furniture seats. On foot nothing changes.
+Vantage improves camera control so you don't have to keep pressing F5. Right now it handles perspective changes while riding an animal, boat or minecart. Quality of life features too! More is planned: see Future plans below.
 
-## Out of the box
+## Features
 
-- Looking roughly straight ahead (between +20° and -20°): first person.
-- Looking down: third person, from behind.
-- Looking up past +60°: selfie view. It stays until you look below +20° again, so it doesn't flicker at the edge.
-- Pressing F5 yourself still works. Your choice sticks until you look into a different range.
-- When you get off, die or get thrown off, you get back the view you had before you got on.
+**Camera angles:** set up your own ranges of look angles, each with its own camera perspective. Where two ranges overlap, the current view holds until you have clearly left it, so it doesn't flicker at the border. Ranges on a higher layer overrule the ones on lower layers.
 
-## Make it your own
+Default setup: look down for third person view, look straight ahead for first person and look up for selfie mode!
 
-The view is picked from **ranges**. A range says "between these two angles, use this view". You can have up to 8 of them, and a radar in the settings shows them as coloured arcs around a little head, with a line for where you are looking right now.
+**Quality of life:**
 
-Ranges sit on **layers** 1 to 5. A range on a higher layer wins while you look into it. Ranges on the same layer can overlap: the one you are already in keeps going until you leave it, which stops the view from jumping back and forth at the border.
+- **Smooth glide back:** when a wall or tree pushes the camera close to you, it glides back out once there is room again instead of snapping. You choose how long the glide takes.
+- **Auto first person:** when there is barely any room behind you, Vantage switches to first person. Once there is space again, your view comes back.
 
-## Tight spaces
+## Future plans
 
-When a wall or a tree pushes the third person camera closer to you, vanilla snaps it back out the moment there is room again. Vantage lets it glide back out instead, over a time you choose (0 to 2 seconds, or off).
-
-Optionally, Vantage can switch to first person when the camera gets squeezed closer than a set distance, and go back once there is room again. This is off by default.
-
-## Settings
-
-Open the settings through [Mod Menu](https://modrinth.com/mod/modmenu). Without Mod Menu there is no settings screen; you can still edit `config/vantage.json` by hand. Changes show up instantly; **Done** saves, **Cancel** undoes everything since you opened the screen.
+- Over-the-shoulder view
+- Elytra flight
 
 ## Requirements
 
-- Minecraft 26.3 with Fabric Loader 0.19.5 or newer
-- [Fabric API](https://modrinth.com/mod/fabric-api)
-- Java 25
-- Optional: [Mod Menu](https://modrinth.com/mod/modmenu) for the settings screen
-
-Vantage runs only on your side (client only). It works on any server, also ones without the mod.
+- Minecraft 26.3 with Fabric Loader and Fabric API
+- Mod Menu (optional)
 
 ## Known issues
 
-- Flicking the mouse quickly across a range border can flash the other view for a moment.
+- Flicking the mouse quickly across the border between two ranges can flash the other view for a moment.
+
+Found a bug? Report it on [GitHub](https://github.com/MKrabs/vantage/issues).
+
+Request a feature? Ask on [GitHub](https://github.com/MKrabs/vantage/issues).
+
+Wanna talk about anything else? You guessed it, [GitHub](https://github.com/MKrabs/vantage/issues).
+
+Made with ❤️ by MKrabs
+
+<!-- Modrinth description ends here; the rest is for GitHub only. -->
 
 ## Building
 
-Needs JDK 25. `./gradlew build` puts the jar in `build/libs/`.
+Want to build the mod yourself? Install JDK 25 (the Java Development Kit), then run `./gradlew build` in the project folder. The finished mod is `build/libs/vantage-<version>.jar` (not the `-sources` one); put it in your `mods` folder.
 
 ## License
 

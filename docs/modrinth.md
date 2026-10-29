@@ -4,7 +4,7 @@ Copy these into the Modrinth project. Keep them in sync with the README when fea
 
 - **Name:** Vantage
 - **Summary:** Switches your camera view while you ride, based on where you look.
-- **Description:** the README from the first paragraph up to (not including) "Building".
+- **Description:** the README from the bold notice up to the "Modrinth description ends here" comment.
 - **Categories:** Utility (plus Transportation if offered).
 - **Environment:** client required, server unsupported.
 - **License:** MIT.
