@@ -76,8 +76,9 @@ Findings:
 2. **Next version:** shoulder view (left/right) as another view choice in the ranges; elytra (below).
 3. **Later, each grilled on its own first:**
    - **Minecart camera follows the track.** Risk: quick successive turns cause motion sickness. Simple start: follow the travel direction heavily smoothed (1-2 s) so short wiggles barely move it. Complex: average the track direction a few blocks ahead. Open: turn only the camera, or also the player's look direction (that one fights the mouse).
-   - **Fishing camera:** follow the bobber in flight, then pan to a view looking back at the player ("second person") or a bird's-eye view, with an obstruction check; a fun line showing how far it landed. Not tied to mounts.
-   - **Boat camera:** over-the-shoulder or second-person view for boats, likely covered by the shoulder view.
+   - **Fishing camera:** follow the bobber in flight like a goal replay, then pan to a view from the bobber looking back at the player ("second person") or a bird's-eye view. Check whether that view would be blocked before using it. After it lands in the water, a fun text with how far it landed from the player. Not tied to mounts, but the user first pictured it fishing from a boat.
+   - **Boat camera:** third person over a shoulder (the user suggested a random shoulder), or the second-person view above; likely covered by the shoulder view.
+   - The user's own words for these ideas: "QoL features" for minecart and boat, "fun idea" for the fishing camera, so it is lower priority.
 
 ## Open
 
