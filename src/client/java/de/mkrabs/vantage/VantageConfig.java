@@ -3,6 +3,8 @@ package de.mkrabs.vantage;
 import net.minecraft.client.CameraType;
 
 public class VantageConfig {
+	public boolean enabled = true;
+
 	public CameraType downView = CameraType.FIRST_PERSON;
 	public CameraType middleView = CameraType.THIRD_PERSON_BACK;
 	public CameraType upView = CameraType.THIRD_PERSON_FRONT;
