@@ -10,13 +10,15 @@ import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-/** Settings: radar on top, one row per range, then on/off and ease-out. Edits apply live; saved on close. */
+/** Settings: radar on top, one row per range, then the other options. Edits apply live; Done saves, Cancel reverts. */
 public class VantageScreen extends Screen {
 	private static final int MAX_WIDTH = 360, ROW = 22, GAP = 4;
 	private static final List<Integer> LAYERS = List.of(1, 2, 3, 4, 5);
 
 	private final Screen parent;
 	private final VantageConfig config = VantageClient.CONFIG;
+	private final VantageConfig snapshot = config.copy();
+	private boolean resetArmed;
 	private int hintX, hintY;
 
 	public VantageScreen(Screen parent) {
@@ -44,8 +46,10 @@ public class VantageScreen extends Screen {
 	protected void init() {
 		int w = Math.min(MAX_WIDTH, width - 20);
 		int left = (width - w) / 2;
-		int below = config.ranges.size() * ROW + ROW + GAP + ROW + 12 + ROW;
-		int radarHeight = Math.max(60, Math.min(130, height - 24 - below - 8));
+		int half = (w - GAP) / 2;
+		// ranges, add, on/off + ease, hint, close camera (2 rows), bottom buttons
+		int below = config.ranges.size() * ROW + ROW + GAP + ROW + 12 + 2 * ROW + GAP + ROW;
+		int radarHeight = Math.max(60, Math.min(325, height - 24 - below - 8));
 
 		int y = 20;
 		addRenderableWidget(new RadarWidget(left, y, w, radarHeight, config));
@@ -60,9 +64,9 @@ public class VantageScreen extends Screen {
 					.withValues(CameraType.values()).displayOnlyValue()
 					.create(x, y, viewW, 20, Component.literal("View"), (b, v) -> r.view = v));
 			x += viewW + GAP;
-			addRenderableWidget(new AngleSlider(x, y, angleW, 20, "From", () -> r.from, v -> r.from = v));
+			addRenderableWidget(NumberSlider.angle(x, y, angleW, "From", () -> r.from, v -> r.from = v));
 			x += angleW + GAP;
-			addRenderableWidget(new AngleSlider(x, y, angleW, 20, "To", () -> r.to, v -> r.to = v));
+			addRenderableWidget(NumberSlider.angle(x, y, angleW, "To", () -> r.to, v -> r.to = v));
 			x += angleW + GAP;
 			addRenderableWidget(CycleButton.builder((Integer l) -> Component.literal("Layer " + l), r.layer)
 					.withValues(LAYERS).displayOnlyValue()
@@ -82,7 +86,6 @@ public class VantageScreen extends Screen {
 		add.active = config.ranges.size() < VantageConfig.MAX_RANGES;
 		y += ROW + GAP;
 
-		int half = (w - GAP) / 2;
 		addRenderableWidget(CycleButton.onOffBuilder(config.enabled)
 				.create(left, y, half, 20, Component.literal("Vantage"), (b, v) -> config.enabled = v));
 		addRenderableWidget(new EaseSlider(left + half + GAP, y, half, 20, config));
@@ -90,8 +93,31 @@ public class VantageScreen extends Screen {
 		hintY = y + 22;
 		y += ROW + 12;
 
+		addRenderableWidget(CycleButton.onOffBuilder(config.closeCamera)
+				.create(left, y, half, 20, Component.literal("Too close: 1st person"), (b, v) -> config.closeCamera = v));
+		addRenderableWidget(new NumberSlider(left + half + GAP, y, half, 20, 0.5f, 4, 0.1f,
+				v -> String.format("Switch below %.1f blocks", v), () -> config.closeEnter, v -> config.closeEnter = v));
+		y += ROW;
+		addRenderableWidget(new NumberSlider(left, y, half, 20, 1, 6, 0.1f,
+				v -> String.format("Back above %.1f blocks", v), () -> config.closeLeave, v -> config.closeLeave = v));
+		addRenderableWidget(new NumberSlider(left + half + GAP, y, half, 20, 0, 5, 0.1f,
+				v -> String.format("Stay at least %.1f s", v), () -> config.closeMinSeconds, v -> config.closeMinSeconds = v));
+		y += ROW + GAP;
+
+		int third = (w - 2 * GAP) / 3;
+		addRenderableWidget(Button.builder(Component.literal("Cancel"), b -> {
+			config.copyFrom(snapshot);
+			minecraft.gui.setScreen(parent);
+		}).bounds(left, y, third, 20).build());
+		addRenderableWidget(Button.builder(Component.literal(resetArmed ? "Click again to reset" : "Reset to defaults"), b -> {
+			if (resetArmed) {
+				config.copyFrom(new VantageConfig());
+			}
+			resetArmed = !resetArmed;
+			rebuildWidgets();
+		}).bounds(left + third + GAP, y, third, 20).build());
 		addRenderableWidget(Button.builder(Component.literal("Done"), b -> onClose())
-				.bounds(width / 2 - 50, y, 100, 20).build());
+				.bounds(left + 2 * (third + GAP), y, third, 20).build());
 	}
 
 	@Override
