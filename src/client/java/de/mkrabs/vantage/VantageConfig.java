@@ -12,4 +12,7 @@ public class VantageConfig {
 	public float downLeave = 35;
 	public float upEnter = -75;
 	public float upLeave = -45;
+
+	// Seconds for the camera to ease back to full distance; 0 = instant like vanilla.
+	public float easeSeconds = 0.5f;
 }
