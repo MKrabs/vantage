@@ -24,6 +24,28 @@ class VantageConfigTest {
 	}
 
 	@Test
+	void sanitizeKeepsTheCloseCameraReleaseAboveItsTrigger() {
+		VantageConfig config = new VantageConfig();
+		config.closeEnter = 3;
+		config.closeLeave = 2;
+		config.closeMinSeconds = -1;
+		config.sanitize();
+		assertEquals(3, config.closeLeave);
+		assertEquals(0, config.closeMinSeconds);
+	}
+
+	@Test
+	void copyFromRestoresAnEarlierSnapshot() {
+		VantageConfig config = new VantageConfig();
+		VantageConfig snapshot = config.copy();
+		config.ranges.clear();
+		config.easeSeconds = 2;
+		config.copyFrom(snapshot);
+		assertEquals(3, config.ranges.size());
+		assertEquals(0.5f, config.easeSeconds);
+	}
+
+	@Test
 	void sanitizeCapsTheNumberOfRangesAndRestoresAMissingList() {
 		VantageConfig config = new VantageConfig();
 		config.ranges = new ArrayList<>();

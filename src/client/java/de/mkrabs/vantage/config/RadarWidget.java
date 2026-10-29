@@ -27,7 +27,7 @@ class RadarWidget extends AbstractWidget {
 		g.fill(x, y, x + w, y + h, 0x55000000);
 
 		int cx = x + 22, cy = y + h / 2;
-		int maxR = Math.min(h / 2 - 8, w - 130);
+		int maxR = Math.min(h / 2 - 8, w - 160); // room for the angle label and the legend
 		int innerR = 16;
 		float layerStep = (maxR - innerR) / (float) VantageConfig.MAX_LAYER;
 
@@ -48,10 +48,15 @@ class RadarWidget extends AbstractWidget {
 
 		Minecraft mc = Minecraft.getInstance();
 		if (mc.player != null) {
-			double a = Math.toRadians(-mc.player.getXRot());
-			for (int d = 10; d <= maxR + 4; d += 2) {
+			float angle = -mc.player.getXRot();
+			double a = Math.toRadians(angle);
+			int tip = maxR + 6;
+			for (int d = 10; d <= tip; d += 2) {
 				dot(g, cx + (int) Math.round(d * Math.cos(a)), cy - (int) Math.round(d * Math.sin(a)), 1, 0xFFFFFFFF);
 			}
+			int lx = cx + (int) Math.round((tip + 4) * Math.cos(a));
+			int ly = cy - (int) Math.round((tip + 4) * Math.sin(a)) - 4;
+			g.text(mc.font, String.format("%+.0f°", angle), lx, Math.max(y + 2, Math.min(y + h - 10, ly)), 0xFFFFFFFF, true);
 		}
 
 		head(g, cx, cy);

@@ -29,6 +29,27 @@ public class VantageConfig {
 	// Seconds for the camera to ease back to full distance; 0 = instant like vanilla.
 	public float easeSeconds = 0.5f;
 
+	// Temporary first person when the camera is pushed close to the head (blocks / seconds).
+	public boolean closeCamera = false;
+	public float closeEnter = 1.5f;
+	public float closeLeave = 3;
+	public float closeMinSeconds = 2;
+
+	public VantageConfig copy() {
+		return GSON.fromJson(GSON.toJson(this), VantageConfig.class);
+	}
+
+	public void copyFrom(VantageConfig other) {
+		VantageConfig c = other.copy();
+		enabled = c.enabled;
+		ranges = c.ranges;
+		easeSeconds = c.easeSeconds;
+		closeCamera = c.closeCamera;
+		closeEnter = c.closeEnter;
+		closeLeave = c.closeLeave;
+		closeMinSeconds = c.closeMinSeconds;
+	}
+
 	public static class Range {
 		public CameraType view;
 		public float from, to;
@@ -61,6 +82,9 @@ public class VantageConfig {
 			r.layer = Math.max(1, Math.min(MAX_LAYER, r.layer));
 		}
 		easeSeconds = clamp(easeSeconds, 0, 2);
+		closeEnter = clamp(closeEnter, 0.5f, 4);
+		closeLeave = clamp(closeLeave, closeEnter, 6);
+		closeMinSeconds = clamp(closeMinSeconds, 0, 5);
 	}
 
 	private static float clamp(float value, float min, float max) {
