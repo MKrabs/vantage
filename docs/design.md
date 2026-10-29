@@ -94,5 +94,4 @@ Findings:
 
 - Radar editing by dragging arc ends, if read-only feels limiting.
 - A quick mouse flick past a range edge briefly flashes the other view.
-- A two-handle (range) slider is possible as an own widget; the user has an idea for it, not grilled yet.
 - **Elytra**: should gliding trigger it like a mount? Decide after the mount version works. [Auto Third Person](https://modrinth.com/mod/auto-third-person-official) already does mounts + elytra, so elytra is expected by users.
