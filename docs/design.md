@@ -42,6 +42,15 @@ Pitch: -90° straight up, +90° straight down.
 
 Whitelists, keybind, camera through leaves, auto first person in tight spaces.
 
+## Prototype result (branch `prototype/hooks`)
+
+Confirmed in game on 26.3: mount detection by polling `getVehicle()` each tick, switching via `Options#setCameraType` + `checkEntityPostEffect`, pitch from `getXRot()`, and an `@Inject` at RETURN of `Camera#getMaxZoom` all work. Mount/dismount/restore held on donkey, horse, boat and minecart, including being thrown off.
+
+Findings:
+- The default angles felt bad to play with (selfie at -75° needs looking almost straight up). Defaults stay as a starting point; the settings screen is where they get tuned.
+- A quick mouse flick briefly flashes the other view. Not addressed yet.
+- Forest easing and manual F5 were not judged.
+
 ## Open
 
 - **Elytra**: should gliding trigger it like a mount? Decide after the mount version works. [Auto Third Person](https://modrinth.com/mod/auto-third-person-official) already does mounts + elytra, so elytra is expected by users.
