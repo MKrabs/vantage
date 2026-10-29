@@ -20,7 +20,8 @@ public class VantageClient implements ClientModInitializer {
 			return;
 		}
 		boolean active = CONFIG.enabled && !mc.player.isSpectator() && mc.player.getVehicle() != null;
-		CameraType view = SWITCHER.tick(active, mc.player.getXRot(), mc.options.getCameraType());
+		// Minecraft's pitch is negative when looking up; the settings use +90 for straight up.
+		CameraType view = SWITCHER.tick(active, -mc.player.getXRot(), mc.options.getCameraType());
 		if (view != null && view != mc.options.getCameraType()) {
 			// Same two calls vanilla's F5 handler makes.
 			mc.options.setCameraType(view);

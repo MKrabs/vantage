@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.CameraType;
 import org.slf4j.Logger;
@@ -13,37 +15,35 @@ import org.slf4j.LoggerFactory;
 public class VantageConfig {
 	private static final Logger LOG = LoggerFactory.getLogger("vantage");
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+	public static final int MAX_LAYER = 5;
+	public static final int MAX_RANGES = 8;
 
 	public boolean enabled = true;
 
-	public CameraType downView = CameraType.FIRST_PERSON;
-	public CameraType middleView = CameraType.THIRD_PERSON_BACK;
-	public CameraType upView = CameraType.THIRD_PERSON_FRONT;
-
-	// Pitch in degrees: -90 straight up, +90 straight down.
-	public float downEnter = 65;
-	public float downLeave = 35;
-	public float upEnter = -75;
-	public float upLeave = -45;
+	// Angles: +90 straight up, -90 straight down. List order breaks ties on a layer.
+	public List<Range> ranges = new ArrayList<>(List.of(
+			new Range(CameraType.THIRD_PERSON_BACK, 60, -90, 1),
+			new Range(CameraType.THIRD_PERSON_FRONT, 90, 20, 1),
+			new Range(CameraType.FIRST_PERSON, 20, -20, 2)));
 
 	// Seconds for the camera to ease back to full distance; 0 = instant like vanilla.
 	public float easeSeconds = 0.5f;
 
-	/** Repairs values a hand-edited file could break. An exit line past its enter line would flicker every tick. */
-	public void sanitize() {
-		VantageConfig defaults = new VantageConfig();
-		if (downView == null) downView = defaults.downView;
-		if (middleView == null) middleView = defaults.middleView;
-		if (upView == null) upView = defaults.upView;
-		downEnter = clamp(downEnter, -90, 90);
-		upEnter = clamp(upEnter, -90, 90);
-		downLeave = clamp(downLeave, -90, downEnter);
-		upLeave = clamp(upLeave, upEnter, 90);
-		easeSeconds = clamp(easeSeconds, 0, 2);
-	}
+	public static class Range {
+		public CameraType view;
+		public float from, to;
+		public int layer;
 
-	private static float clamp(float value, float min, float max) {
-		return Float.isNaN(value) ? min : Math.max(min, Math.min(max, value));
+		public Range(CameraType view, float from, float to, int layer) {
+			this.view = view;
+			this.from = from;
+			this.to = to;
+			this.layer = layer;
+		}
+
+		public boolean contains(float angle) {
+			return angle >= Math.min(from, to) && angle <= Math.max(from, to);
+		}
 	}
 
 	private static Path file() {
@@ -59,15 +59,10 @@ public class VantageConfig {
 		} catch (IOException | RuntimeException e) {
 			LOG.warn("Could not read {}, using defaults", file(), e);
 		}
-		if (config == null) {
-			config = new VantageConfig();
-		}
-		config.sanitize();
-		return config;
+		return config == null ? new VantageConfig() : config;
 	}
 
 	public void save() {
-		sanitize();
 		try {
 			Files.writeString(file(), GSON.toJson(this));
 		} catch (IOException e) {
