@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "vantage",
+	"version": "${version}",
+	"name": "Vantage - Auto Camera for Mounts",
+	"description": "Automatic third person when riding. Look down for first person, look up for a selfie.",
+	"authors": [
+		"M.krabs"
+	],
+	"license": "MIT",
+	"icon": "assets/vantage/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"de.mkrabs.vantage.VantageClient"
+		]
+	},
+	"mixins": [
+		{
+			"config": "vantage.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
