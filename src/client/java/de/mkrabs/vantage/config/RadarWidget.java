@@ -10,15 +10,22 @@ import net.minecraft.network.chat.Component;
 
 /**
  * Display only. A head on the left looking right; a half circle from +90 (up) to -90 (down).
- * Each range is an arc in its view's colour, one ring per layer (layer 1 innermost).
- * Ranges sharing a layer sit slightly apart so overlaps stay visible. The white beam is the current angle.
+ * One band per layer (layer 1 innermost) up to the highest layer in use; each range is a thick arc in its view's colour,
+ * centred in its band. Ranges sharing a band sit side by side so overlaps stay visible. The white beam is the current angle.
  */
 class RadarWidget extends AbstractWidget {
+	private static final int GRID = 0xFF505050;
+
 	private final VantageConfig config;
 
 	RadarWidget(int x, int y, int width, int height, VantageConfig config) {
 		super(x, y, width, height, Component.literal("Ranges"));
 		this.config = config;
+	}
+
+	/** Rings drawn: layer 1 up to the highest layer any range uses; 0 without ranges. */
+	static int rings(VantageConfig config) {
+		return config.ranges.stream().mapToInt(r -> r.layer).max().orElse(0);
 	}
 
 	@Override
@@ -28,22 +35,30 @@ class RadarWidget extends AbstractWidget {
 
 		int cx = x + 22, cy = y + h / 2;
 		int maxR = Math.min(h / 2 - 8, w - 160); // room for the angle label and the legend
-		int innerR = 16;
-		float layerStep = (maxR - innerR) / (float) VantageConfig.MAX_LAYER;
+		int innerR = 14;
+		int rings = Math.max(1, rings(config));
+		float band = (maxR - innerR) / (float) rings;
 
-		boolean[] used = new boolean[VantageConfig.MAX_LAYER + 1];
-		int[] seen = new int[VantageConfig.MAX_LAYER + 1];
-		for (VantageConfig.Range r : config.ranges) {
-			used[r.layer] = true;
+		for (int i = 0; i <= rings; i++) {
+			arc(g, cx, cy, innerR + Math.round(i * band), -90, 90, 1, GRID);
 		}
-		for (int layer = 1; layer <= VantageConfig.MAX_LAYER; layer++) {
-			if (used[layer]) {
-				arc(g, cx, cy, ringRadius(innerR, layerStep, layer) - 1, -90, 90, 6, 1, 0x40FFFFFF);
+		g.fill(cx, cy - maxR, cx + 1, cy + maxR + 1, GRID);
+		for (int deg = -45; deg <= 45; deg += 45) {
+			double a = Math.toRadians(deg);
+			for (int d = innerR; d <= maxR; d++) {
+				dot(g, cx + (int) Math.round(d * Math.cos(a)), cy - (int) Math.round(d * Math.sin(a)), 1, GRID);
 			}
 		}
+
+		int thick = Math.clamp(Math.round(band / 4), 2, 6);
+		int[] count = new int[VantageConfig.MAX_LAYER + 1], seen = new int[VantageConfig.MAX_LAYER + 1];
+		config.ranges.forEach(r -> count[r.layer]++);
 		for (VantageConfig.Range r : config.ranges) {
-			int radius = ringRadius(innerR, layerStep, r.layer) + 3 * seen[r.layer]++;
-			arc(g, cx, cy, radius, Math.min(r.from, r.to), Math.max(r.from, r.to), 1, 2, VantageScreen.viewColor(r.view));
+			float total = count[r.layer] * (thick + 1) - 1;
+			int radius = Math.round(innerR + (r.layer - 1) * band + (band - total) / 2) + seen[r.layer]++ * (thick + 1);
+			for (int t = 0; t < thick; t++) {
+				arc(g, cx, cy, radius + t, Math.min(r.from, r.to), Math.max(r.from, r.to), 2, VantageScreen.viewColor(r.view));
+			}
 		}
 
 		Minecraft mc = Minecraft.getInstance();
@@ -72,13 +87,14 @@ class RadarWidget extends AbstractWidget {
 			legendY += 12;
 		}
 		g.text(mc.font, "Inner ring = layer 1", x + w - 92, y + h - 10, 0xFF9A9A9A, false);
+		if (!active) {
+			g.fill(x, y, x + w, y + h, 0xAA000000); // faded while Vantage is off
+		}
 	}
 
-	private static int ringRadius(int innerR, float step, int layer) {
-		return innerR + Math.round((layer - 1) * step);
-	}
-
-	private static void arc(GuiGraphicsExtractor g, int cx, int cy, int radius, float fromDeg, float toDeg, int stepDeg, int size, int color) {
+	/** A solid arc: steps of under a pixel along the circle. */
+	private static void arc(GuiGraphicsExtractor g, int cx, int cy, int radius, float fromDeg, float toDeg, int size, int color) {
+		float stepDeg = 45f / Math.max(1, radius);
 		for (float a = fromDeg; a <= toDeg; a += stepDeg) {
 			double rad = Math.toRadians(a);
 			dot(g, cx + (int) Math.round(radius * Math.cos(rad)), cy - (int) Math.round(radius * Math.sin(rad)), size, color);

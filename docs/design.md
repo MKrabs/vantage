@@ -45,11 +45,21 @@ So selfie switches in above 60 and releases below 20 through the overlap, and lo
 ## Settings (own screen, Mod Menu optional)
 
 - Fixed, readable width; values update instantly; no collapsible groups. YACL dropped.
-- Mod on/off (no keybind).
-- Radar (display only for now): head on the left, half circle +90..-90, one arc per range in its view's colour, one ring per layer (layer 1 innermost), a beam with the current angle as a label. Up to 325 px tall, shrinks on small screens.
-- One row per range with add and delete.
-- Ease-out time 0-2 s, default 0.5 s, 0 = off. Snaps to 0.2 / 0.5 / 0.667 / 1 when close; hold Shift for any value (hint shown under the slider).
-- Too-close camera: on/off plus the three values.
+- Everything above the bottom buttons scrolls (mouse wheel) when the window is too small; the bottom buttons stay pinned.
+- Sections separated by horizontal rulers with a small title on the line, half a row of space below each title. Top to bottom:
+  - **Vantage enabled** checkbox, alone on the first row (no keybind). When off, everything else is greyed out and does nothing; the radar fades. Cancel / Reset / Done stay usable.
+  - **Ranges:** the radar, one row per range, add.
+    - Radar (display only for now): head on the left, half circle +90..-90, one band per layer (layer 1 innermost), a beam with the current angle as a label.
+    - Bands shown: layers 1 up to the highest layer in use, nothing beyond (only layer 3 used still shows 1, 2, 3). The bands share the full radius, so one layer fills the whole half circle.
+    - Ranges are thick arcs in their view's colour, centred in their band with a margin; ranges sharing a band sit side by side.
+    - Dark grey grid: the half circle's outline, a semicircle between bands, and spokes at +45, 0 and -45.
+    - Height: 180 px for 1-2 bands, +20 px per extra band (240 px with 5).
+  - **Tight spaces**, in rows:
+    1. Too-close camera checkbox.
+    2. Ease-out time (0-2 s, default 0.5 s, 0 shows Off; snaps to 0.2 / 0.5 / 0.667 / 1 when close, hold Shift for any value, hint under it) | stay at least (seconds).
+    3. Switch below | back above (blocks, half-block steps).
+    The three too-close values are greyed out while the checkbox is off; ease-out is its own feature and stays active.
+- Sliders move in their steps: the handle jumps to the value, it does not glide between steps.
 - Bottom: **Cancel** (revert everything since the screen opened), **Reset to defaults** (second click confirms), **Done** (saves; Esc too). No step-by-step undo: Cancel covers it, revisit if missed.
 
 ## Out of scope
@@ -84,5 +94,5 @@ Findings:
 
 - Radar editing by dragging arc ends, if read-only feels limiting.
 - A quick mouse flick past a range edge briefly flashes the other view.
-- On small windows with 8 ranges the bottom buttons can be cut off (no scrolling yet).
+- A two-handle (range) slider is possible as an own widget; the user has an idea for it, not grilled yet.
 - **Elytra**: should gliding trigger it like a mount? Decide after the mount version works. [Auto Third Person](https://modrinth.com/mod/auto-third-person-official) already does mounts + elytra, so elytra is expected by users.

@@ -36,6 +36,8 @@ class NumberSlider extends AbstractSliderButton {
 
 	@Override
 	protected void applyValue() {
-		set.accept(Math.round((min + (float) value * (max - min)) / step) * step);
+		float v = Math.round((min + (float) value * (max - min)) / step) * step;
+		set.accept(v);
+		value = (v - min) / (max - min); // the handle jumps to the step instead of gliding
 	}
 }
