@@ -1,6 +1,6 @@
 # Vantage
 
-Vantage switches your camera view automatically while you ride, based on where you look. Look straight ahead and you see through your own eyes, look down and the camera moves behind you, look up and it turns around for a selfie. Get off and your old view comes back.
+Vantage improves camera control so you don't have to keep pressing F5. Right now it handles perspective changes while riding an animal, boat or minecart. For example: look straight ahead for first person, look down for third person, look up for a selfie. Get off and your old view comes back. Quality of life: the camera glides back out smoothly after a wall pushes it close, and can switch to first person when there is no room behind you. More is planned, starting with an over-the-shoulder view.
 
 It works on anything you can sit on: horses, donkeys, camels, pigs, striders, boats, minecarts, modded mounts and furniture seats. On foot nothing changes.
 
