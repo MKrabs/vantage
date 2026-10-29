@@ -82,7 +82,7 @@ Findings:
 
 ## Roadmap
 
-1. **0.1 (now):** everything above, once the user has played it and is happy.
+1. **1.0 (released):** everything above.
 2. **Next version:** shoulder view (left/right) as another view choice in the ranges; elytra (below).
 3. **Later, each grilled on its own first:**
    - **Minecart camera follows the track.** Risk: quick successive turns cause motion sickness. Simple start: follow the travel direction heavily smoothed (1-2 s) so short wiggles barely move it. Complex: average the track direction a few blocks ahead. Open: turn only the camera, or also the player's look direction (that one fights the mouse).
