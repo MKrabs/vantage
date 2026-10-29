@@ -46,6 +46,27 @@ public class VantageConfig {
 		}
 	}
 
+	/** Repairs what a hand-edited or outdated file can break. */
+	public void sanitize() {
+		if (ranges == null) {
+			ranges = new VantageConfig().ranges;
+		}
+		ranges.removeIf(r -> r == null || r.view == null);
+		while (ranges.size() > MAX_RANGES) {
+			ranges.removeLast();
+		}
+		for (Range r : ranges) {
+			r.from = clamp(r.from, -90, 90);
+			r.to = clamp(r.to, -90, 90);
+			r.layer = Math.max(1, Math.min(MAX_LAYER, r.layer));
+		}
+		easeSeconds = clamp(easeSeconds, 0, 2);
+	}
+
+	private static float clamp(float value, float min, float max) {
+		return Float.isNaN(value) ? min : Math.max(min, Math.min(max, value));
+	}
+
 	private static Path file() {
 		return FabricLoader.getInstance().getConfigDir().resolve("vantage.json");
 	}
@@ -59,7 +80,11 @@ public class VantageConfig {
 		} catch (IOException | RuntimeException e) {
 			LOG.warn("Could not read {}, using defaults", file(), e);
 		}
-		return config == null ? new VantageConfig() : config;
+		if (config == null) {
+			config = new VantageConfig();
+		}
+		config.sanitize();
+		return config;
 	}
 
 	public void save() {
