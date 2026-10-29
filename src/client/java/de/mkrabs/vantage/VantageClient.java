@@ -6,7 +6,7 @@ import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 
 public class VantageClient implements ClientModInitializer {
-	public static final VantageConfig CONFIG = new VantageConfig();
+	public static final VantageConfig CONFIG = VantageConfig.load();
 	public static final CameraEase EASE = new CameraEase(CONFIG);
 	private static final ViewSwitcher SWITCHER = new ViewSwitcher(CONFIG);
 

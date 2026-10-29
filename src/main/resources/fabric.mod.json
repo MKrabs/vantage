@@ -13,6 +13,9 @@
 	"entrypoints": {
 		"client": [
 			"de.mkrabs.vantage.VantageClient"
+		],
+		"modmenu": [
+			"de.mkrabs.vantage.config.VantageModMenu"
 		]
 	},
 	"mixins": [
@@ -26,5 +29,9 @@
 		"minecraft": "~26.3",
 		"java": ">=25",
 		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*",
+		"yet_another_config_lib_v3": "*"
 	}
 }
