@@ -1,6 +1,12 @@
-# Vantage
-
-**Client side · Visual only · Does not affect gameplay**
+<div align="center"><h1>Vantage</h1></div>
+<div align="center">
+  <code>Client side</code> · 
+  <code>Visual only</code> · 
+  <code>v1.0.0</code> · 
+  <code><a href="https://github.com/MKrabs/vantage">GitHub</a></code> · 
+  <code><a href="https://modrinth.com/mod/vantage-m.krabs">Modrinth</a></code>
+</div>
+</br>
 
 Vantage improves camera control so you don't have to keep pressing F5. Right now it handles perspective changes while riding an animal, boat or minecart. Quality of life features too! More is planned: see Future plans below.
 
