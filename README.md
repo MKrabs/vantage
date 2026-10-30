@@ -8,7 +8,7 @@ Vantage improves camera control so you don't have to keep pressing F5. Right now
 
 | Ranges in action | Camera too close |
 |---|---|
-| [▶ Watch the video](https://github.com/MKrabs/vantage/blob/main/docs/media/Example_ranges_showcase.mp4) | [▶ Watch the video](https://github.com/MKrabs/vantage/blob/main/docs/media/Camera_too_close_showcase.mp4) |
+| https://github.com/user-attachments/assets/47abd9db-32de-40a0-af82-3f150fc6fddb | https://github.com/user-attachments/assets/d73cf3fd-473a-4106-9134-ba081d74c608 |
 | ![Settings with the radar, looking up](https://raw.githubusercontent.com/MKrabs/vantage/main/docs/media/Screenshot_Menu_2.png) | ![Settings with the radar, looking down](https://raw.githubusercontent.com/MKrabs/vantage/main/docs/media/Screenshot_Menu.png) |
 
 ## Features
