@@ -4,6 +4,13 @@
 
 Vantage improves camera control so you don't have to keep pressing F5. Right now it handles perspective changes while riding an animal, boat or minecart. Quality of life features too! More is planned: see Future plans below.
 
+## Showcase
+
+| Ranges in action | Camera too close |
+|---|---|
+| [▶ Watch the video](https://github.com/MKrabs/vantage/blob/main/docs/media/Example_ranges_showcase.mp4) | [▶ Watch the video](https://github.com/MKrabs/vantage/blob/main/docs/media/Camera_too_close_showcase.mp4) |
+| ![Settings with the radar, looking up](https://raw.githubusercontent.com/MKrabs/vantage/main/docs/media/Screenshot_Menu_2.png) | ![Settings with the radar, looking down](https://raw.githubusercontent.com/MKrabs/vantage/main/docs/media/Screenshot_Menu.png) |
+
 ## Features
 
 **Camera angles:** set up your own ranges of look angles, each with its own camera perspective. Where two ranges overlap, the current view holds until you have clearly left it, so it doesn't flicker at the border. Ranges on a higher layer overrule the ones on lower layers.

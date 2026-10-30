@@ -42,3 +42,7 @@ replay_*.log
 # game logs
 
 logs/
+
+# original recordings; the compressed .mp4 copies are committed
+
+docs/media/*.mkv
